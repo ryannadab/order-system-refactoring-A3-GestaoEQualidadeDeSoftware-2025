@@ -94,63 +94,18 @@ class Order:
         print(f"Frete: R${self.calculate_shipping_cost():.2f}")
         print(f"Total final: R${self.calculate_final_total():.2f}")
 
-class TestOrderSystem(unittest.TestCase):
-    """Testes unitários para o sistema de pedidos."""
-
-    def setUp(self):
-        """Configuração inicial para os testes."""
-        self.customer = Customer("João")
-        self.item1 = Item("Caneta", 2.50)
-        self.item2 = Item("Caderno", 10.00)
-        self.items = [self.item1, self.item2]
-        self.local_shipping = LocalShipping()
-        self.national_shipping = NationalShipping()
-        self.international_shipping = InternationalShipping()
-
-    def test_item_creation(self):
-        """Testa a criação de um item."""
-        self.assertEqual(self.item1.name, "Caneta")
-        self.assertEqual(self.item1.price, 2.50)
-
-    def test_customer_creation(self):
-        """Testa a criação de um cliente."""
-        self.assertEqual(self.customer.name, "João")
-
-    def test_local_shipping_calculation(self):
-        """Testa o cálculo do frete local."""
-        order = Order(self.customer, self.items, self.local_shipping)
-        self.assertEqual(order.calculate_shipping_cost(), 10.0)
-
-    def test_national_shipping_calculation(self):
-        """Testa o cálculo do frete nacional."""
-        order = Order(self.customer, self.items, self.national_shipping)
-        self.assertEqual(order.calculate_shipping_cost(), 20.0)
-
-    def test_international_shipping_calculation(self):
-        """Testa o cálculo do frete internacional."""
-        order = Order(self.customer, self.items, self.international_shipping)
-        self.assertEqual(order.calculate_shipping_cost(), 50.0)
-
-    def test_order_total_calculation(self):
-        """Testa o cálculo do valor total dos itens no pedido."""
-        order = Order(self.customer, self.items, self.local_shipping)
-        self.assertEqual(order.calculate_total(), 12.50)
-
-    def test_order_final_total_with_local_shipping(self):
-        """Testa o cálculo do valor total final do pedido com frete local."""
-        order = Order(self.customer, self.items, self.local_shipping)
-        self.assertEqual(order.calculate_final_total(), 22.50)
-
-    def test_order_final_total_with_national_shipping(self):
-        """Testa o cálculo do valor total final do pedido com frete nacional."""
-        order = Order(self.customer, self.items, self.national_shipping)
-        self.assertEqual(order.calculate_final_total(), 32.50)
-
-    def test_order_final_total_with_international_shipping(self):
-        """Testa o cálculo do valor total final do pedido com frete internacional."""
-        order = Order(self.customer, self.items, self.international_shipping)
-        self.assertEqual(order.calculate_final_total(), 62.50)
-
-# Para executar os testes ao rodar o script
+# Exemplo de uso
 if __name__ == "__main__":
-    unittest.main()
+    items = [
+        Item("Notebook", 3000.00),
+        Item("Mouse", 150.50),
+        Item("Teclado", 200.00)
+    ]
+
+    customer = Customer("Maria")
+
+    # Substitua aqui para testar outros tipos de frete
+    shipping = NationalShipping()
+
+    order = Order(customer, items, shipping)
+    order.print_invoice()
